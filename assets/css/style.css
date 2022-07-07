@@ -1,0 +1,23 @@
+.center {
+    text-align: center;
+}
+
+.header {
+    background-color: blue;
+    color: white;
+}
+
+.full-size {
+    width: 100%;
+}
+
+#search-city-btn{
+    background-color: blue;
+    color: white;
+}
+
+#created-cities-container button {
+    background-color: gray;
+    color: black;
+    /* display: none; */
+}
