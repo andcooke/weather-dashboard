@@ -3,8 +3,10 @@
 }
 
 .header {
-    background-color: blue;
+    background-image: linear-gradient(to right, blue, navy);
     color: white;
+    padding: .75rem 0;
+    margin-bottom: .5rem;
 }
 
 .full-size {

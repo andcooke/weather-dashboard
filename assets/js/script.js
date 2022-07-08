@@ -55,7 +55,7 @@ function getWeatherNow() {
                     return response.json();
             })
             .then(function(data){
-                for (let i = 3; i < 40; i+=8){
+                for (let i = 2; i < 40; i+=8){
                     console.log("date:", data.list[i].dt_txt)
                     console.log("icon:", data.list[i].weather[0].icon)
                     console.log("temperature:", data.list[i].main.temp)
