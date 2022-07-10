@@ -20,7 +20,7 @@
 }
 
 #created-cities-container button {
-    background-color: gray;
+    background-color: lightgray;
     color: black;
     /* display: none; */
 }
@@ -38,4 +38,17 @@
 #search-bar {
     padding-top: 40px;
     padding-bottom: 20px;
+}
+
+#saved-button {
+    border-radius: 5px;
+    border: none;
+    padding: 5px 0;
+    margin: 5px 0;
+}
+
+.future-card {
+    background-color: navy;
+    color: white;
+    width: 100%; 
 }
