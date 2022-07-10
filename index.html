@@ -24,22 +24,27 @@
     </header>
     <main>
         <section class = "row">
-            <div class = "col-3">
+            <div class = "col-3" id="search-bar">
                 <!-- search title -->
                 <h2>Search for a City:</h2>
                 <!-- city input -->
-               <input class="form-control" id="input-city" type="text" placeholder="Houston" />
+               <input class="form-control" id="input-city" type="text" placeholder="Houston" value=""/>
                <!-- search button -->
                <button type="button" class="btn full-size" id="search-city-btn">Search</button>
             </div>
+            <div class = "col-9 current-weather-container" id = "test">
+                <!-- current weather information -->
+            </div>
+        </section>
+
+        <section class = "row">
             <div class = "col-3 full-size" id="created-cities-container">
                 <!-- created buttons will append here -->
             </div>
         </section>
+
+
         <section>
-            <div>
-                <!-- current weather information -->
-            </div>
             <div>
                 <!-- 5 day forecast -->
                 <!-- 5 cards -->

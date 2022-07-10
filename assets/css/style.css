@@ -14,6 +14,7 @@
 }
 
 #search-city-btn{
+    margin-top: 15px;
     background-color: blue;
     color: white;
 }
@@ -22,4 +23,19 @@
     background-color: gray;
     color: black;
     /* display: none; */
+}
+
+#test {
+    border: 2px solid black;
+    width: 100%;
+    height: 100%;
+}
+
+.current-weather-container {
+    display: none;
+}
+
+#search-bar {
+    padding-top: 40px;
+    padding-bottom: 20px;
 }
