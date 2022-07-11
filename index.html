@@ -23,34 +23,35 @@
         <h1>Weather Dashboard</h1>
     </header>
     <main>
-        <section class = "row">
-            <div class = "col-3" id="search-bar">
-                <!-- search title -->
-                <h2>Search for a City:</h2>
-                <!-- city input -->
-               <input class="form-control" id="input-city" type="text" placeholder="Houston" value=""/>
-               <!-- search button -->
-               <button type="button" class="btn full-size" id="search-city-btn">Search</button>
-            </div>
-            <div class = "col-9 current-weather-container" id = "test">
-                <!-- current weather information -->
-            </div>
+        <section class = "container-fluid">
+            <section class = "row">
+                <div class = "col-sm-12 col-md-3" id="search-bar">
+                    <!-- search title -->
+                    <h2>Search for a City:</h2>
+                    <!-- city input -->
+                <input class="form-control" id="input-city" type="text" placeholder="Houston" value=""/>
+                <!-- search button -->
+                <button type="button" class="btn full-size" id="search-city-btn">Search</button>
+                </div>
+            </section>
+            <section class="row">
+                <div class="col-3 full-size" id="created-cities-container">
+                    <!-- created buttons will append here -->
+                </div>
+            </section>
         </section>
 
-        <section class="row">
-            <div class="col-3 full-size" id="created-cities-container">
-                <!-- created buttons will append here -->
-            </div>
+        <section class = "container-fluid">
+            <section class="row">
+                <div class = "col-8 current-weather-container" id = "test">
+                    <!-- current weather information -->
+                </div>
+                <div class = "col-8" id = "future-forecast-container">
+                    <!-- 5 day forecast -->
+                    <!-- 5 cards -->
+                </div>
+            </section>
         </section>
-
-
-        <section class="row">
-            <div class = "col-9" id = "future-forecast-container">
-                <!-- 5 day forecast -->
-                <!-- 5 cards -->
-            </div>
-        </section>
-        
     </main>
     <script 
         src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" 

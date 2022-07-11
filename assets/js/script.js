@@ -5,47 +5,42 @@ let btnContainerEl = document.querySelector("#created-cities-container");
 let userSearch = document.getElementById("input-city");
 let currentWeatherContainer = document.querySelector(".current-weather-container");
 let futureForecastContainer = document.querySelector("#future-forecast-container");
-let userSearchValue;
-let geoAPIurl;
+// let userSearchValue;
+// let geoAPIurl;
 let savedBtns;
 let cityButtons = [];
 
 const apiKey = "8cf3ec2307733a32bbd3e39236609609";
     
-
 //on load check local storage for cities and make buttons
-
 
 searchBtnEl.addEventListener("click", function () {
     currentWeatherContainer.textContent = "";
-    userSearchValue = userSearch.value;
+    let userSearchValue = userSearch.value;
     if (!userSearchValue) {
         window.alert("Please input a city to receive the weather.")
         // console.log("blank");
     } else if (cityButtons.includes(userSearchValue)) {
         geoAPIurl = `http://api.openweathermap.org/geo/1.0/direct?q=${userSearchValue}&limit=5&appid=${apiKey}`;
-        getWeather();
+        getCoordinates();
     } else {
-        cityButtons.push(userSearchValue);
-        localStorage.setItem("savedButtons", cityButtons)
-        localStorage.setItem("newButton", userSearchValue);
         //console.log(userSearchValue);
         geoAPIurl = `http://api.openweathermap.org/geo/1.0/direct?q=${userSearchValue}&limit=5&appid=${apiKey}`;
-        getWeather();
-        makeButton();
+        getCoordinates(userSearchValue);
+        saveSearch(userSearchValue);
+        
     }
 });
 
-
-
-// async function getWeatherNow() {
+// async function getCoordinatesNow() {
 //     currentWeatherContainer.innerHTML = "";
 //     var response = await fetch(geoAPIurl);
 //     var data = await response.json();
 //     lat = data[0].lat;
 //     lon = data[0].lon;
 
-function getWeather() {
+function getCoordinates(city) {
+    let geoAPIurl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${apiKey}`;
     fetch(geoAPIurl)
     .then(function(response) {
         return response.json();
@@ -54,15 +49,15 @@ function getWeather() {
         currentWeatherContainer.setAttribute("style", "display: block");
         lat = data[0].lat;
         lon = data[0].lon;
-        getCurrentWeather();
-        get5Day();
+        getCurrentWeather(lat, lon, city);
     })
     .catch(err => console.error(err))
 };
 
 
-function getCurrentWeather () {
-    let weatherAPIurl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}`
+function getCurrentWeather (lat, lon, city) {
+    currentWeatherContainer.innerHTML = "";
+    let weatherAPIurl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&appid=${apiKey}`
     fetch(weatherAPIurl)
     .then(function(response) {
             return response.json();
@@ -71,7 +66,7 @@ function getCurrentWeather () {
         //console.log(data);
         //city title
         let cityTitleEl = document.createElement("h2");
-        cityTitleEl.textContent = userSearchValue;
+        cityTitleEl.textContent = city;
         currentWeatherContainer.appendChild(cityTitleEl)
         //icon
         let iconEl = document.createElement("img");
@@ -85,11 +80,11 @@ function getCurrentWeather () {
         //current Weather
         let currentTemp = document.createElement("p");
         //console.log("temp (in K):", Math.floor(data.current.temp*(9/5)-459.67));
-        currentTemp.textContent = "Temp: " + Math.floor(data.current.temp*(9/5)-459.67) + "F";
+        currentTemp.textContent = `Temp: ${Math.floor(data.current.temp)}°F`;
         currentWeatherContainer.appendChild(currentTemp);
         //console.log("humidity %:", data.current.humidity);
         let currentHumidity = document.createElement("p");
-        currentHumidity.textContent = "Humidity: " + data.current.humidity + "%";
+        currentHumidity.textContent = `Humidity: ${data.current.humidity}%`;
         currentWeatherContainer.appendChild(currentHumidity);
         //console.log("wind in MPH:", data.current.wind_speed);
         let currentWind = document.createElement("p");
@@ -102,62 +97,91 @@ function getCurrentWeather () {
         let currentUV = document.createElement("p");
         currentUV.textContent = "UV Index: " + data.current.uvi;
         currentWeatherContainer.appendChild(currentUV);
+        get5Day(data.daily);
     })
 };
 
-function get5Day () {
-    futureForecastContainer.textContent = ""
-    let fiveDayAPIurl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
-    fetch(fiveDayAPIurl)
-    .then(function(response) {
-            return response.json();
-    })
-    .then(function(data){
-        //console.log(iconUrl)
-        for (let i = 2; i < 40; i+=8){
-            let futureCard = document.createElement("div")
-            futureCard.setAttribute("class", "future-card")
+function get5Day(data) {
+    futureForecastContainer.textContent = "";
+        console.log(data)
+        // for (let i = 0; i < 5; i++){
+        //     let futureCard = document.createElement("div")
+        //     futureCard.setAttribute("class", "future-card")
             
-            // console.log("date:", data.list[i].dt_txt)
-            let futureDate = document.createElement("h3");
-            futureDate.textContent = data.list[i].dt_txt;
-            futureCard.appendChild(futureDate) ;
-            // console.log("icon:", data.list[i].weather[0].icon)
-            let futureIconEl = document.createElement("img")
-            let futureIcon = data.list[i].weather[0].icon
-            let futureIconUrl = `http://openweathermap.org/img/wn/${futureIcon}@2x.png`
-            futureIconEl.setAttribute("src", futureIconUrl);
-            futureCard.appendChild(futureIconEl);
-            // console.log("temperature:", data.list[i].main.temp)
-            let futureTemp = document.createElement("p");
-            futureTemp.textContent = "Temp: " + Math.floor(data.list[i].main.temp*(9/5)-459.67) + "F";
-            futureCard.appendChild(futureTemp);
-            // console.log("wind:", data.list[i].wind.speed)
-            let futureWind= document.createElement("p");
-            futureWind.textContent = "Wind: " + data.list[i].wind.speed + "MPH";
-            futureCard.appendChild(futureWind);
-            // console.log("humidity:", data.list[i].main.humidity)
-            let futureHumidity = document.createElement("p");
-            futureHumidity.textContent = "Humidity: " + data.list[i].main.humidity + "%";
-            futureCard.appendChild(futureHumidity);
-            futureForecastContainer.appendChild(futureCard)
-        }
+        //     // console.log("date:", data.list[i].dt_txt)
+        //     let futureDate = document.createElement("h3");
+        //     futureDate.textContent = data.list[i].dt_txt;
+        //     futureCard.appendChild(futureDate) ;
+        //     // console.log("icon:", data.list[i].weather[0].icon)
+        //     let futureIconEl = document.createElement("img")
+        //     let futureIcon = data.list[i].weather[0].icon
+        //     let futureIconUrl = `http://openweathermap.org/img/wn/${futureIcon}@2x.png`
+        //     futureIconEl.setAttribute("src", futureIconUrl);
+        //     futureCard.appendChild(futureIconEl);
+        //     // console.log("temperature:", data.list[i].main.temp)
+        //     let futureTemp = document.createElement("p");
+        //     futureTemp.textContent = "Temp: " + Math.floor(data.list[i].main.temp*(9/5)-459.67) + "F";
+        //     futureCard.appendChild(futureTemp);
+        //     // console.log("wind:", data.list[i].wind.speed)
+        //     let futureWind= document.createElement("p");
+        //     futureWind.textContent = "Wind: " + data.list[i].wind.speed + "MPH";
+        //     futureCard.appendChild(futureWind);
+        //     // console.log("humidity:", data.list[i].main.humidity)
+        //     let futureHumidity = document.createElement("p");
+        //     futureHumidity.textContent = "Humidity: " + data.list[i].main.humidity + "%";
+        //     futureCard.appendChild(futureHumidity);
+        //     futureForecastContainer.appendChild(futureCard)
+        // }
         //console.log(data);
-    })
+    // })
 };
 
 function makeButton() {
-    let newBtnEl = document.createElement("button");
-    newBtnEl.textContent = localStorage.getItem("newButton");
-    newBtnEl.setAttribute("class", "btn")
-    newBtnEl.setAttribute("class", "full-size")
-    newBtnEl.setAttribute("id", "saved-button")
-    //console.log(localStorage.getItem("test"));
-    btnContainerEl.appendChild(newBtnEl);
+    btnContainerEl.innerHTML = '';
+    // get local storage
+    //loop through the array
+    for (let i = 0; i < cityButtons.length; i++){
+        let newBtnEl = document.createElement("button");
+        newBtnEl.textContent = cityButtons[i];
+        newBtnEl.setAttribute("class", "btn")
+        newBtnEl.setAttribute("class", "full-size")
+        newBtnEl.setAttribute("id", "saved-button")
+        newBtnEl.setAttribute("class", "btn-history")
+        newBtnEl.setAttribute("data-search", cityButtons[i])
+        //console.log(localStorage.getItem("test"));
+        btnContainerEl.appendChild(newBtnEl);
+    }
 }
 
-function getButtons() {
-    savedBtns = localStorage.getItem("savedButtons");
+btnContainerEl.onclick = handleHistoryClick;
+
+function handleHistoryClick (event) {
+    if (!event.target.matches(".btn-history")) {
+        return;
+    } 
+    let btn = event.target;
+    let city = btn.getAttribute("data-search")
+    getCoordinates(city);
+};
+
+function saveSearch(city) {
+    cityButtons.push(city);
+    localStorage.setItem("cities", JSON.stringify(cityButtons));
+    makeButton();
+}
+
+
+function init () {
+    let storedHistory = localStorage.getItem("cities");
+    if (storedHistory) {
+        cityButtons = JSON.parse(storedHistory);
+    }
+    console.log(cityButtons)
+    makeButton();
+}
+
+// function getButtons() {
+//     savedBtns = localStorage.getItem("savedButtons");
     // console.log(savedBtns);
     // if (savedBtns.length > 0) {
     //     cityButtons = savedBtns;
@@ -170,6 +194,6 @@ function getButtons() {
     //         btnContainerEl.appendChild(savedBtnEl)
     //     }
     // }
-}
+// }
 
-getButtons();
+init();
