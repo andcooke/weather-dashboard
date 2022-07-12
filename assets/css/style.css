@@ -43,6 +43,7 @@
 #saved-button {
     border-radius: 5px;
     border: none;
+    width: 100%;
     padding: 5px 0;
     margin: 5px 0;
 }
@@ -50,5 +51,11 @@
 .future-card {
     background-color: navy;
     color: white;
-    width: 100%; 
+    width: 20%; 
+    padding: 2px;
+    margin: 15px auto;
+}
+
+#future-forecast-container {
+    width: 100%;
 }

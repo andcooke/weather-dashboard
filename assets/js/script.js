@@ -5,6 +5,7 @@ let btnContainerEl = document.querySelector("#created-cities-container");
 let userSearch = document.getElementById("input-city");
 let currentWeatherContainer = document.querySelector(".current-weather-container");
 let futureForecastContainer = document.querySelector("#future-forecast-container");
+
 // let userSearchValue;
 // let geoAPIurl;
 let savedBtns;
@@ -63,9 +64,9 @@ function getCurrentWeather (lat, lon, city) {
             return response.json();
     })
     .then(function(data){
-        //console.log(data);
+        console.log(data);
         //city title
-        let cityTitleEl = document.createElement("h2");
+        let cityTitleEl = document.createElement("h1");
         cityTitleEl.textContent = city;
         currentWeatherContainer.appendChild(cityTitleEl)
         //icon
@@ -76,6 +77,10 @@ function getCurrentWeather (lat, lon, city) {
         cityTitleEl.appendChild(iconEl);
 
         //need date
+        let currentDate = document.createElement("h3");
+        var dayname = new Date(data.current.dt * 1000).toLocaleDateString("en", { weekday: "long", month: "long", day: "numeric", year: "numeric"});
+        currentDate.textContent = dayname;
+        currentWeatherContainer.appendChild(currentDate);
 
         //current Weather
         let currentTemp = document.createElement("p");
@@ -102,36 +107,36 @@ function getCurrentWeather (lat, lon, city) {
 };
 
 function get5Day(data) {
-    futureForecastContainer.textContent = "";
-        console.log(data)
-        // for (let i = 0; i < 5; i++){
-        //     let futureCard = document.createElement("div")
-        //     futureCard.setAttribute("class", "future-card")
-            
-        //     // console.log("date:", data.list[i].dt_txt)
-        //     let futureDate = document.createElement("h3");
-        //     futureDate.textContent = data.list[i].dt_txt;
-        //     futureCard.appendChild(futureDate) ;
+    futureForecastContainer.textContent = ""
+        // console.log(data)
+        for (let i = 1; i < 6; i++){
+            let futureCard = document.createElement("div")
+            futureCard.setAttribute("class", "future-card")
+            // console.log("date:", dayname);
+            let futureDate = document.createElement("h4");
+            var dayname = new Date(data[i].dt * 1000).toLocaleDateString("en", { month: "long", day: "numeric", year: "numeric" });
+            futureDate.textContent = dayname;
+            futureCard.appendChild(futureDate) ;
         //     // console.log("icon:", data.list[i].weather[0].icon)
-        //     let futureIconEl = document.createElement("img")
-        //     let futureIcon = data.list[i].weather[0].icon
-        //     let futureIconUrl = `http://openweathermap.org/img/wn/${futureIcon}@2x.png`
-        //     futureIconEl.setAttribute("src", futureIconUrl);
-        //     futureCard.appendChild(futureIconEl);
+            let futureIconEl = document.createElement("img")
+            let futureIcon = data[i].weather[0].icon
+            let futureIconUrl = `http://openweathermap.org/img/wn/${futureIcon}@2x.png`
+            futureIconEl.setAttribute("src", futureIconUrl);
+            futureCard.appendChild(futureIconEl);
         //     // console.log("temperature:", data.list[i].main.temp)
-        //     let futureTemp = document.createElement("p");
-        //     futureTemp.textContent = "Temp: " + Math.floor(data.list[i].main.temp*(9/5)-459.67) + "F";
-        //     futureCard.appendChild(futureTemp);
+            let futureTemp = document.createElement("p");
+            futureTemp.textContent = `Temp: ${Math.floor(data[i].temp.day)}°F`;
+            futureCard.appendChild(futureTemp);
         //     // console.log("wind:", data.list[i].wind.speed)
-        //     let futureWind= document.createElement("p");
-        //     futureWind.textContent = "Wind: " + data.list[i].wind.speed + "MPH";
-        //     futureCard.appendChild(futureWind);
-        //     // console.log("humidity:", data.list[i].main.humidity)
-        //     let futureHumidity = document.createElement("p");
-        //     futureHumidity.textContent = "Humidity: " + data.list[i].main.humidity + "%";
-        //     futureCard.appendChild(futureHumidity);
-        //     futureForecastContainer.appendChild(futureCard)
-        // }
+            let futureWind= document.createElement("p");
+            futureWind.textContent = `Wind: ${Math.floor(data[i].wind_speed)} MPH`;
+            futureCard.appendChild(futureWind);
+        //     // console.log("humidity:", data[i].humidity)
+            let futureHumidity = document.createElement("p");
+            futureHumidity.textContent = `Humidity: ${data[i].humidity}%`;
+            futureCard.appendChild(futureHumidity);
+            futureForecastContainer.appendChild(futureCard)
+        }
         //console.log(data);
     // })
 };
@@ -176,7 +181,7 @@ function init () {
     if (storedHistory) {
         cityButtons = JSON.parse(storedHistory);
     }
-    console.log(cityButtons)
+    // console.log(cityButtons)
     makeButton();
 }
 
