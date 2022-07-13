@@ -59,3 +59,35 @@
 #future-forecast-container {
     width: 100%;
 }
+
+#low {
+    background-color: green;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 5px;
+    font-size: small;
+}
+
+#moderate {
+    background-color: orange;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 5px;
+    font-size: small;
+}
+
+#high {
+    background-color: red;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 5px;
+    font-size: small;
+}
+
+#extreme {
+    background-color: purple;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 5px;
+    font-size: small;
+}

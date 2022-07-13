@@ -100,14 +100,32 @@ function getCurrentWeather (lat, lon, city) {
         //need color background for uv index
 
         let currentUV = document.createElement("p");
-        currentUV.textContent = "UV Index: " + data.current.uvi;
+        currentUV.textContent = "UV Index: ";
+        let currentIndex = document.createElement("span");
+        let uvIndex = data.current.uvi
+        currentIndex.textContent = uvIndex;
+        if (uvIndex <= 2) {
+            currentIndex.setAttribute("id", "low")
+        }
+        if (uvIndex > 2 && uvIndex <= 7) {
+            currentIndex.setAttribute("id", "moderate")
+        }
+        if (uvIndex > 7 && uvIndex <= 10) {
+            currentIndex.setAttribute("id", "high")
+        }
+        if (uvIndex > 10) {
+            currentIndex.setAttribute("id", "extreme")
+        }
+        currentUV.appendChild(currentIndex);
         currentWeatherContainer.appendChild(currentUV);
         get5Day(data.daily);
     })
 };
 
+
+
 function get5Day(data) {
-    futureForecastContainer.textContent = ""
+    futureForecastContainer.textContent = " "
         // console.log(data)
         for (let i = 1; i < 6; i++){
             let futureCard = document.createElement("div")
