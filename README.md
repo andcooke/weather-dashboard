@@ -6,15 +6,15 @@ Deployment Date - July 12,2022
 
 
 ## Usage
-    - Type your desired city in the search bar and click search.
+Type your desired city in the search bar and click search.
 
 ![landing page](./assets/images/landing.png)
     
-    - Current weather and a 5 day forecast will appear
+Current weather and a 5 day forecast will appear
 
 ![search results](./assets/images/weather.png)
 
-    - All recently searched cities will be saved allowing the user to select that button again to see an updated weather report.
+All recently searched cities will be saved allowing the user to select that button again to see an updated weather report.
 
 ![saved buttons](./assets/images/saved-buttons.png)
 
