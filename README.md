@@ -19,15 +19,15 @@ All recently searched cities will be saved allowing the user to select that butt
 ![saved buttons](./assets/images/saved-buttons.png)
 
 ## Lessons Learned 
-     Learned more about inserting parameters into a function and calling that function. <BR>
-     Learned more about local storage and how to implement it. <BR>
-     Learned specifically about the span element in HTML that allows a user to append inline text. <BR>
+Learned more about inserting parameters into a function and calling that function. <BR>
+Learned more about local storage and how to implement it. <BR>
+Learned specifically about the span element in HTML that allows a user to append inline text. <BR>
 
 
 ## Improvement
 
-    The site needs front end work. Things are not spaced as I would like, but everything works as desired.  <BR>
-    Also, if a user types a city wrong, the site saves a button with the mistaken city and doesn't produce accurate weather results. <BR>
+The site needs front end work. Things are not spaced as I would like, but everything works as desired.  <BR>
+Also, if a user types a city wrong, the site saves a button with the mistaken city and doesn't produce accurate weather results. <BR>
     
 
 ## Contributors:
