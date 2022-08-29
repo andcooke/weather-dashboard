@@ -22,11 +22,11 @@ searchBtnEl.addEventListener("click", function () {
         window.alert("Please input a city to receive the weather.")
         // console.log("blank");
     } else if (cityButtons.includes(userSearchValue)) {
-        geoAPIurl = `http://api.openweathermap.org/geo/1.0/direct?q=${userSearchValue}&limit=5&appid=${apiKey}`;
+        geoAPIurl = `https://api.openweathermap.org/geo/1.0/direct?q=${userSearchValue}&limit=5&appid=${apiKey}`;
         getCoordinates();
     } else {
         //console.log(userSearchValue);
-        geoAPIurl = `http://api.openweathermap.org/geo/1.0/direct?q=${userSearchValue}&limit=5&appid=${apiKey}`;
+        geoAPIurl = `https://api.openweathermap.org/geo/1.0/direct?q=${userSearchValue}&limit=5&appid=${apiKey}`;
         getCoordinates(userSearchValue);
         saveSearch(userSearchValue);
         
@@ -41,7 +41,7 @@ searchBtnEl.addEventListener("click", function () {
 //     lon = data[0].lon;
 
 function getCoordinates(city) {
-    let geoAPIurl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${apiKey}`;
+    let geoAPIurl = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${apiKey}`;
     fetch(geoAPIurl)
     .then(function(response) {
         return response.json();
@@ -72,7 +72,7 @@ function getCurrentWeather (lat, lon, city) {
         //icon
         let iconEl = document.createElement("img");
         let currentIcon = data.current.weather[0].icon
-        let iconUrl = `http://openweathermap.org/img/wn/${currentIcon}@2x.png`
+        let iconUrl = `https://openweathermap.org/img/wn/${currentIcon}@2x.png`
         iconEl.setAttribute("src", iconUrl);
         cityTitleEl.appendChild(iconEl);
 
@@ -138,7 +138,7 @@ function get5Day(data) {
         //     // console.log("icon:", data.list[i].weather[0].icon)
             let futureIconEl = document.createElement("img")
             let futureIcon = data[i].weather[0].icon
-            let futureIconUrl = `http://openweathermap.org/img/wn/${futureIcon}@2x.png`
+            let futureIconUrl = `https://openweathermap.org/img/wn/${futureIcon}@2x.png`
             futureIconEl.setAttribute("src", futureIconUrl);
             futureCard.appendChild(futureIconEl);
         //     // console.log("temperature:", data.list[i].main.temp)
